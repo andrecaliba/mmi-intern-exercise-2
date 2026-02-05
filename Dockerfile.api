@@ -17,6 +17,8 @@ COPY ./api ./api
 COPY ./shared ./shared
 COPY ./database ./database
 
+ENV PYTHONPATH=/app/api
+
 # Expose the port FastAPI will run on 
 EXPOSE 8000
 

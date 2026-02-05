@@ -8,7 +8,7 @@ swagger-ui-bundle==0.0.9
 python-jose[cryptography]==3.3.0  # For API authentication if needed
 
 # Database - MongoDB
-pymongo==4.6.1
+pymongo==4.16.0
 motor==3.3.2  # Async MongoDB driver for FastAPI
 
 # Redis

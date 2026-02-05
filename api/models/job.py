@@ -45,6 +45,7 @@ class JobCreate(BaseModel):
     total_articles: int = Field(..., ge=1, description="Total number of articles in job")
     new_articles: int = Field(default=0, ge=0, description="Number of new articles to scrape")
     cached_articles: int = Field(default=0, ge=0, description="Number of cached articles")
+    article_ids: List[str] = Field(default_factory=list, description="List of article IDs in the job")
 
 
 class JobUpdate(BaseModel):
@@ -100,7 +101,7 @@ class Job(JobBase):
     
     def to_dict(self) -> dict:
         """Convert model to dictionary for MongoDB insertion"""
-        data = self.model_dump(by_alias=True, exclude_unset=True)
+        data = self.model_dump(by_alias=True, exclude_none=True)
         if data.get("_id") is None:
             data.pop("_id", None)
         return data

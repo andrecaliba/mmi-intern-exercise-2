@@ -16,6 +16,8 @@ COPY ./consumer ./consumer
 COPY ./database ./database
 COPY ./shared ./shared
 
+ENV PYTHONPATH=/app/api
+
 # The entry point for the consumer service
 # This starts the worker process defined in the exercise [cite: 225]
 CMD ["python", "-m", "consumer.worker"]
