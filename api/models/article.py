@@ -40,7 +40,7 @@ class ArticleBase(BaseModel):
     url: HttpUrl
     source: str = Field(..., min_length=1, max_length=100, description="Source of the article (e.g., TechNews)")
     category: str = Field(..., min_length=1, max_length=50, description="Article category (e.g., AI, ML)")
-    priority: str = Field(..., min_length=3, max_length=6, description="Priority level (high, medium, low)")
+    priority: int = Field(default=1, ge=1, le=10, description="Priority level (1-10, higher = more urgent)")
 
 
 class ArticleCreate(ArticleBase):

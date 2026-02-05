@@ -8,32 +8,8 @@ from api.models.job import (
     JobStatus
 )
 
-priority_map = {
-    "high": 1,
-    "medium": 2,
-    "low": 3
-}
-
 REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379')
 redis_client = redis.from_url(REDIS_URL)
-
-# def __parse_json(filename):
-#     """
-#     Load and parse articles from JSON file.
-    
-#     Returns:
-#         dict: Parsed JSON data or empty list if error occurs
-#     """
-#     try:
-#         with open(filename, 'r') as file:
-#             data = json.load(file)
-#             return data
-#     except FileNotFoundError:
-#         print("File not found")
-#         return []
-#     except json.JSONDecodeError:
-#         print("Invalid JSON format")
-#         return []
 
 def publish_article(data):
     """
@@ -43,9 +19,7 @@ def publish_article(data):
         data: Article dictionary containing url, source, category, priority
     """
     message = json.dumps(data)
-    priority = data.get('priority', 'medium')
-    score = priority_map.get(priority, 2)
-    redis_client.zadd('articles', {message: score})
+    redis_client.zadd('articles', {message: data.get("priority", 3)})
 
 async def publish_all(data):
     """Parse JSON file and publish all articles to Redis queue."""
