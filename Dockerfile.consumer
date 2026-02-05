@@ -1,0 +1,21 @@
+# Use an official Python runtime as a parent image
+FROM python:3.11-slim
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy requirements from the project root
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the consumer-specific code and shared modules
+# Based on project structure [cite: 222, 233]
+COPY ./consumer ./consumer
+COPY ./database ./database
+COPY ./shared ./shared
+
+# The entry point for the consumer service
+# This starts the worker process defined in the exercise [cite: 225]
+CMD ["python", "-m", "consumer.worker"]
