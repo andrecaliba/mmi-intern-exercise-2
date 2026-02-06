@@ -101,8 +101,15 @@ class Article(ArticleBase):
     def to_dict(self) -> dict:
         """Convert model to dictionary for MongoDB insertion"""
         data = self.model_dump(by_alias=True, exclude_unset=True)
+        
+        # Convert HttpUrl to string for MongoDB
+        if "url" in data:
+            data["url"] = str(data["url"])
+        
+        # Remove _id if it's None
         if data.get("_id") is None:
             data.pop("_id", None)
+        
         return data
     
     @classmethod
@@ -110,8 +117,12 @@ class Article(ArticleBase):
         """Create Article instance from MongoDB document"""
         if not data:
             return None
+        
+        # Convert ObjectId to string
         if "_id" in data:
             data["_id"] = str(data["_id"])
+        
+        # URL is already a string in MongoDB, Pydantic will validate it
         return cls(**data)
 
 

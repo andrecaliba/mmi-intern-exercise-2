@@ -19,11 +19,12 @@ services:
     depends_on:
       - redis
       - mongodb
+      - api
     environment:
       - REDIS_URL=redis://redis:6379
       - MONGO_URL=mongodb://mongodb:27017
-    deploy:
-      replicas: 3  # Multiple consumer instances
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1  # <--- Add this line
 
   redis:
     image: redis:7-alpine

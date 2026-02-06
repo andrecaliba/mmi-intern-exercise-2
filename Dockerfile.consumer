@@ -1,23 +1,25 @@
-# Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy requirements from the project root
-COPY requirements.txt .
-
 # Install dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the consumer-specific code and shared modules
-# Based on project structure [cite: 222, 233]
+# Copy all directories
 COPY ./consumer ./consumer
 COPY ./database ./database
 COPY ./shared ./shared
+COPY ./api ./api
 
-ENV PYTHONPATH=/app/api
+# CRITICAL: Create __init__.py files to fix the "not a package" errors
+RUN touch consumer/__init__.py \
+    && touch database/__init__.py \
+    && touch api/__init__.py
 
-# The entry point for the consumer service
-# This starts the worker process defined in the exercise [cite: 225]
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1
+
+# Run the module correctly
 CMD ["python", "-m", "consumer.worker"]
