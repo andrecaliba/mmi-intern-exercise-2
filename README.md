@@ -429,48 +429,6 @@ volumes:
 ```
 
 ---
-
-## 🧪 Testing
-
-### Run All Tests
-
-```bash
-# Run all tests
-pytest
-
-# Run with coverage
-pytest --cov=api --cov=consumer --cov=database --cov-report=html
-
-# Use test runner
-python run_tests.py
-```
-
-### Test Coverage
-
-- **84 unit tests** covering all components
-- Models, repositories, services, API routes
-- Success and error scenarios
-- Mocked external dependencies
-
-```bash
-# View coverage report
-open htmlcov/index.html
-```
-
-### Test Structure
-
-```
-tests/
-├── test_models_article.py      # 20 tests - Article model
-├── test_models_job.py          # 18 tests - Job model
-├── test_repositories.py        # 10 tests - Database operations
-├── test_scraper.py             # 9 tests - Web scraping
-├── test_publisher.py           # 9 tests - Job submission
-├── test_consumer.py            # 10 tests - Article processing
-└── test_api_routes.py          # 8 tests - API endpoints
-```
-
----
 ## Development
 
 ### Setup Development Environment
